@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
+<style>
+  body { margin:0; background:#f7f6f3; color:#152941; font-family:"Inter",system-ui,sans-serif; }
+  * { box-sizing:border-box; }
+  a { color:#8a7550; text-decoration:none; }
+  a:hover { color:#152941; }
+  ::selection { background:#efe8dc; }
+  input, textarea, select, button { font-family:inherit; }
+  :focus-visible { outline:2px solid #b4a283; outline-offset:2px; }
+  img { max-width:100%; }
+  .menu-btn { display:none; }
+  @media (max-width: 760px) {
+    .site-header { padding:12px 16px !important; gap:12px !important; }
+    .nav-links { display:none !important; }
+    .nav-actions a { padding:8px 12px !important; font-size:12px !important; }
+    .menu-btn { display:flex !important; }
+    .grid-2img { grid-template-columns:1fr !important; }
+    .split-2 { grid-template-columns:1fr !important; gap:32px !important; }
+    .cta-split { grid-template-columns:1fr !important; }
+    .cta-split .cta-btn { width:100%; justify-content:center; }
+    .vaga-grid { grid-template-columns:1fr !important; }
+    .timeline-grid { grid-template-columns:repeat(2,1fr) !important; }
+    .equipe-grid { grid-template-columns:repeat(3,1fr) !important; }
+    .valrow { grid-template-columns:1fr !important; row-gap:6px !important; }
+    .banco-row { flex-direction:column !important; align-items:flex-start !important; }
+    .banco-row .cta-btn { width:100%; justify-content:center; margin-top:14px; }
+    .page-sec { padding-left:20px !important; padding-right:20px !important; }
+    .footer-row { flex-direction:column !important; gap:8px !important; text-align:center !important; }
+    .map-frame { min-height:260px !important; }
+  }
+  @media (max-width: 480px) {
+    .timeline-grid { grid-template-columns:1fr !important; }
+    .equipe-grid { grid-template-columns:repeat(2,1fr) !important; }
+  }
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;background:#f7f6f3;color:#152941">
+
+  <header class="site-header" style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 40px;background:rgba(245,245,249,0.9);backdrop-filter:blur(14px);border-bottom:1px solid rgba(21,41,65,0.1)">
+    <div onClick="{{ irHome }}" style="display:flex;align-items:baseline;gap:10px;cursor:pointer">
+      <span style="font-size:17px;font-weight:600;letter-spacing:-0.01em">Seu Liah</span>
+      <span style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:#6b7382">Barbearia</span>
+    </div>
+    <nav class="nav-links" style="display:flex;align-items:center;gap:26px;font-size:13px">
+      <span onClick="{{ irHome }}" style="cursor:pointer;color:#444f62;padding-bottom:2px" style-hover="color:#152941">Início</span>
+      <span onClick="{{ irServicos }}" style="cursor:pointer;color:#444f62;padding-bottom:2px" style-hover="color:#152941">Serviços</span>
+      <span onClick="{{ irSobre }}" style="cursor:pointer;color:#444f62;padding-bottom:2px" style-hover="color:#152941">Sobre</span>
+      <span onClick="{{ irUnidade }}" style="cursor:pointer;color:#444f62;padding-bottom:2px" style-hover="color:#152941">Unidade</span>
+      <span onClick="{{ irTrabalhe }}" style="cursor:pointer;color:#444f62;padding-bottom:2px" style-hover="color:#152941">Trabalhe conosco</span>
+    </nav>
+    <div class="nav-actions" style="display:flex;align-items:center;gap:10px">
+      <a href="https://cashbarber.com.br/barbeariaseuliah" target="_blank" style="display:inline-flex;align-items:center;padding:8px 16px;border:1px solid #b4a283;border-radius:8px;font-size:13px;color:#152941" style-hover="background:rgba(180,162,131,0.18)">Agendar</a>
+      <span class="menu-btn" onClick="{{ toggleMenu }}" style="align-items:center;justify-content:center;width:36px;height:36px;border:1px solid rgba(21,41,65,0.18);border-radius:8px;cursor:pointer;font-size:16px;flex:none">{{ menuIcone }}</span>
+    </div>
+  </header>
+
+  <sc-if value="{{ menuAberto }}" hint-placeholder-val="{{ false }}">
+    <div style="position:sticky;top:0;z-index:29;display:flex;flex-direction:column;padding:8px 20px 20px;background:#f7f6f3;border-bottom:1px solid rgba(21,41,65,0.1)">
+      <span onClick="{{ irHome }}" style="padding:13px 0;font-size:15px;color:#444f62;border-top:1px solid rgba(21,41,65,0.08)">Início</span>
+      <span onClick="{{ irServicos }}" style="padding:13px 0;font-size:15px;color:#444f62;border-top:1px solid rgba(21,41,65,0.08)">Serviços</span>
+      <span onClick="{{ irSobre }}" style="padding:13px 0;font-size:15px;color:#444f62;border-top:1px solid rgba(21,41,65,0.08)">Sobre</span>
+      <span onClick="{{ irUnidade }}" style="padding:13px 0;font-size:15px;color:#444f62;border-top:1px solid rgba(21,41,65,0.08)">Unidade</span>
+      <span onClick="{{ irTrabalhe }}" style="padding:13px 0;font-size:15px;color:#444f62;border-top:1px solid rgba(21,41,65,0.08)">Trabalhe conosco</span>
+    </div>
+  </sc-if>
+
+  <main style="flex:1">
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <section style="position:relative;min-height:82vh;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(88px,20vw,120px) clamp(20px,6vw,40px) clamp(44px,10vw,72px);overflow:hidden">
+        <img src="img/hero-operacao.jpeg" alt="Salão da Barbearia Seu Liah em pleno atendimento" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(247,246,243,0.92), rgba(247,246,243,0.86) 55%, rgba(247,246,243,0.96))"></div>
+        <div style="position:relative;max-width:1400px;margin:0 auto;width:100%">
+          <div style="display:inline-flex;align-items:center;gap:9px;padding:9px 16px;border-radius:6px;background:#152941;color:#fffefb;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:clamp(24px,6vw,40px)">
+            <span style="display:block;width:6px;height:6px;border-radius:999px;background:#b4a283"></span>
+            Garanhuns · PE · desde 2019
+          </div>
+          <h1 style="font-size:clamp(38px,9vw,80px);line-height:0.95;letter-spacing:-0.035em;font-weight:700;text-transform:uppercase;margin:0 0 clamp(24px,6vw,40px);max-width:16ch;color:#152941">Venha ter essa experiência.</h1>
+          <div style="display:flex;gap:20px;border-left:3px solid #b4a283;padding-left:22px;max-width:64ch;margin-bottom:clamp(24px,6vw,40px)">
+            <p style="font-size:clamp(15px,4vw,19px);line-height:1.55;color:#444f62;margin:0">Estética masculina com atendimento de excelência. Corte, barba e cuidados de pele em um ambiente construído para que você saia melhor do que entrou.</p>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:12px">
+            <a href="https://cashbarber.com.br/barbeariaseuliah" target="_blank" style="display:inline-flex;align-items:center;padding:14px clamp(20px,5vw,30px);border-radius:8px;background:#152941;font-size:15px;font-weight:500;color:#fffefb" style-hover="background:#1d3454">Agendar no CashBarber</a>
+            <a href="https://wa.me/5587981357771" target="_blank" style="display:inline-flex;align-items:center;padding:14px clamp(20px,5vw,30px);border:1px solid #152941;border-radius:8px;font-size:15px;font-weight:500;color:#152941" style-hover="background:rgba(180,162,131,0.18)">Agendar pelo WhatsApp</a>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding:0 clamp(20px,6vw,40px) 88px">
+        <div class="grid-2img" style="max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:18px;align-items:start">
+          <div onClick="{{ irServicos }}" style="cursor:pointer;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,41,65,0.12)" style-hover="box-shadow:0 0 0 1px rgba(180,162,131,0.7)">
+            <img src="img/destaques/limpeza-de-pele.png" alt="Limpeza de pele na Barbearia Seu Liah" style="width:100%;height:auto;display:block" />
+          </div>
+          <div onClick="{{ irServicos }}" style="cursor:pointer;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,41,65,0.12)" style-hover="box-shadow:0 0 0 1px rgba(180,162,131,0.7)">
+            <img src="img/destaques/lavagem-especial.png" alt="Lavagem especial na Barbearia Seu Liah" style="width:100%;height:auto;display:block" />
+          </div>
+        </div>
+      </section>
+
+      <section style="padding:0 0 96px">
+        <div style="background:#152941;padding:clamp(56px,14vw,96px) clamp(20px,6vw,40px)">
+          <div style="max-width:1400px;margin:0 auto">
+            <h6 style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#b4a283;margin:0 0 26px">Nossa missão</h6>
+            <p style="font-size:clamp(28px,7vw,54px);line-height:1.1;letter-spacing:-0.035em;font-weight:500;margin:0 0 30px;max-width:28ch;color:#fffefb">Transformar a imagem em uma ferramenta de desenvolvimento pessoal, profissional e social.</p>
+
+
+          </div>
+        </div>
+      </section>
+
+      <section style="padding:0 clamp(20px,6vw,40px) 96px">
+        <div style="max-width:1400px;margin:0 auto">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:8px">
+            <div>
+              <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">CULTURA SEU LIAH</h6>
+              <h2 style="font-size:clamp(24px,6vw,38px);font-weight:500;letter-spacing:-0.025em;margin:0">NOSSOS VALORES</h2>
+            </div>
+
+          </div>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ valores }}" as="v" hint-placeholder-count="5">
+              <div class="valrow" style="display:grid;grid-template-columns:96px 1fr 1.2fr;gap:32px;align-items:baseline;padding:32px 4px;border-top:1px solid rgba(21,41,65,0.14)" style-hover="background:rgba(180,162,131,0.07)">
+                <span style="font-size:clamp(24px,6vw,34px);font-weight:600;letter-spacing:-0.02em;color:#b4a283">{{ v.num }}</span>
+                <span style="font-size:clamp(19px,5vw,26px);font-weight:600;letter-spacing:-0.02em;line-height:1.2;text-transform:uppercase">{{ v.nome }}</span>
+                <span style="font-size:15px;line-height:1.6;color:#444f62">{{ v.desc }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding:0 clamp(20px,6vw,40px) 96px">
+        <div class="cta-split" style="max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;padding-top:56px;border-top:1px solid rgba(21,41,65,0.1)">
+          <div>
+            <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Trabalhe conosco</h6>
+            <h2 style="font-size:clamp(22px,6vw,34px);font-weight:500;letter-spacing:-0.02em;margin:0 0 12px">TRABALHE CONOSCO</h2>
+            <p style="font-size:16px;color:#444f62;max-width:60ch;margin:0">Processo seletivo em etapas. Sem vaga para o seu perfil agora? Seu cadastro fica no banco de talentos.</p>
+          </div>
+          <span class="cta-btn" onClick="{{ irTrabalhe }}" style="display:inline-flex;align-items:center;padding:16px 30px;border:1px solid #b4a283;border-radius:8px;font-size:15px;font-weight:500;color:#152941;white-space:nowrap;cursor:pointer" style-hover="background:rgba(180,162,131,0.18)">Quero me candidatar</span>
+        </div>
+      </section>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isServicos }}" hint-placeholder-val="{{ false }}">
+    <section class="page-sec" style="padding:72px 40px 96px;max-width:1400px;margin:0 auto">
+      <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Serviços</h6>
+      <h1 style="font-size:clamp(28px,7vw,44px);font-weight:500;letter-spacing:-0.025em;margin:0 0 16px">Tudo que o cuidado masculino pede</h1>
+      <p style="font-size:16px;color:#444f62;max-width:62ch;margin:0 0 44px">Serviços executados por profissionais treinados no padrão Seu Liah. Valores e disponibilidade no agendamento.</p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px">
+        <sc-for list="{{ servicos }}" as="s" hint-placeholder-count="9">
+          <div style="border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,41,65,0.12)" style-hover="box-shadow:0 0 0 1px rgba(180,162,131,0.7)">
+            <img src="{{ s.img }}" alt="{{ s.nome }}" style="width:100%;height:auto;display:block">
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:22px">
+        <span style="padding:8px 14px;border:1px solid rgba(21,41,65,0.16);border-radius:999px;font-size:13px;color:#444f62">Desondulação capilar</span>
+        <span style="padding:8px 14px;border:1px solid rgba(21,41,65,0.16);border-radius:999px;font-size:13px;color:#444f62">Hidratação capilar</span>
+        <span style="padding:8px 14px;border:1px solid rgba(21,41,65,0.16);border-radius:999px;font-size:13px;color:#444f62">Terapia facial</span>
+      </div>
+      <div style="margin-top:48px;display:flex;gap:12px">
+        <a href="https://cashbarber.com.br/barbeariaseuliah" target="_blank" style="display:inline-flex;align-items:center;padding:14px 26px;border:1px solid #b4a283;border-radius:8px;font-size:14px;font-weight:500;color:#152941" style-hover="background:rgba(180,162,131,0.18)">Agendar no CashBarber</a>
+        <a href="https://wa.me/5587981357771" target="_blank" style="display:inline-flex;align-items:center;padding:14px 26px;border:1px solid rgba(21,41,65,0.18);border-radius:8px;font-size:14px;color:#152941" style-hover="border-color:#6b7382">Agendar pelo WhatsApp</a>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isSobre }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <section class="page-sec" style="padding:72px 40px 64px;max-width:1400px;margin:0 auto">
+        <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Sobre nós</h6>
+        <h1 style="font-size:clamp(28px,7vw,48px);font-weight:500;letter-spacing:-0.03em;line-height:1.08;margin:0 0 20px;max-width:24ch">Construindo um legado desde 2019</h1>
+        <p style="font-size:clamp(15px,4vw,17px);line-height:1.65;color:#444f62;max-width:70ch;margin:0">A Barbearia Seu Liah nasceu com o propósito de ir além dos serviços tradicionais: um ambiente onde atendimento de excelência, profissionalismo e desenvolvimento humano caminham juntos.</p>
+      </section>
+
+      <section class="page-sec" style="padding:0 40px 80px;max-width:1400px;margin:0 auto">
+        <div class="timeline-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(21,41,65,0.12);border-radius:14px;overflow:hidden">
+          <sc-for list="{{ timeline }}" as="t" hint-placeholder-count="5">
+            <div style="background:#fffefb;padding:26px 22px 30px">
+              <div style="font-size:12px;font-weight:600;letter-spacing:0.06em;color:#8a7550">{{ t.ano }}</div>
+              <div style="font-size:15px;font-weight:500;margin-top:10px">{{ t.titulo }}</div>
+              <div style="font-size:13px;line-height:1.55;color:#6b7382;margin-top:8px">{{ t.texto }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section class="page-sec" style="padding:0 40px 80px">
+        <div style="max-width:1400px;margin:0 auto;background:linear-gradient(160deg,#efe9dd,#f7f4ec);border-radius:14px;padding:clamp(32px,8vw,60px) clamp(22px,7vw,56px)">
+          <div class="split-2" style="display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-bottom:48px">
+            <div>
+              <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Missão</h6>
+              <p style="font-size:clamp(18px,5vw,24px);line-height:1.3;font-weight:500;letter-spacing:-0.015em;margin:0">Transformar a imagem em uma ferramenta de desenvolvimento pessoal, profissional e social.</p>
+            </div>
+            <div>
+              <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Visão</h6>
+              <p style="font-size:clamp(18px,5vw,24px);line-height:1.3;font-weight:500;letter-spacing:-0.015em;margin:0">1.000 clientes por mês até 2028, com 98% de satisfação e compromisso inegociável com a excelência.</p>
+            </div>
+          </div>
+          <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 4px">Valores · pirâmide cultural</h6>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ valores }}" as="v" hint-placeholder-count="5">
+              <div class="valrow" style="display:grid;grid-template-columns:76px 1fr 1.2fr;gap:28px;align-items:baseline;padding:26px 4px;border-top:1px solid rgba(21,41,65,0.14)">
+                <span style="font-size:13px;letter-spacing:0.1em;color:#6b7382">{{ v.num }}</span>
+                <span style="font-size:clamp(18px,5vw,24px);font-weight:500;letter-spacing:-0.02em;line-height:1.2">{{ v.nome }}</span>
+                <span style="font-size:15px;line-height:1.6;color:#444f62">{{ v.desc }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-sec" style="padding:0 40px 96px;max-width:1400px;margin:0 auto">
+        <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Equipe</h6>
+        <h2 style="font-size:clamp(24px,6vw,36px);font-weight:500;letter-spacing:-0.02em;margin:0 0 36px">Quem vai te atender</h2>
+        <div class="equipe-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:14px">
+          <sc-for list="{{ equipe }}" as="p" hint-placeholder-count="7">
+            <div>
+              <img src="{{ p.foto }}" alt="{{ p.nome }}" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;box-shadow:0 0 0 1px rgba(21,41,65,0.12)">
+              <div style="font-size:14px;font-weight:500;margin-top:12px">{{ p.nome }}</div>
+              <div style="font-size:12px;color:#6b7382">{{ p.cargo }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isUnidade }}" hint-placeholder-val="{{ false }}">
+    <section class="page-sec split-2" style="display:grid;grid-template-columns:1fr 1fr;gap:56px;padding:72px 40px 96px;max-width:1400px;margin:0 auto">
+      <div>
+        <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Unidade</h6>
+        <h1 style="font-size:clamp(26px,7vw,44px);font-weight:500;letter-spacing:-0.025em;margin:0 0 22px">Garanhuns, Santo Antônio</h1>
+        <p style="font-size:16px;line-height:1.6;color:#444f62;margin:0 0 32px">Rua Prof. Maria Edite da Paz Nogueira, 44<br>Santo Antônio · Garanhuns — PE</p>
+        <div style="display:grid;gap:1px;background:rgba(21,41,65,0.12);border-radius:8px;overflow:hidden;max-width:440px">
+          <div style="display:flex;justify-content:space-between;padding:14px 18px;background:#fffefb;font-size:14px"><span>Segunda a sexta</span><span style="color:#444f62">09h — 20h</span></div>
+          <div style="display:flex;justify-content:space-between;padding:14px 18px;background:#fffefb;font-size:14px"><span>Sábado</span><span style="color:#444f62">09h — 17h</span></div>
+          <div style="display:flex;justify-content:space-between;padding:14px 18px;background:#fffefb;font-size:14px"><span>Domingo</span><span style="color:#8d94a1">Fechado</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:32px;font-size:15px">
+          <a href="https://wa.me/5587981357771" target="_blank">WhatsApp (87) 98135-7771</a>
+          <a href="https://instagram.com/seuliah" target="_blank">Instagram @seuliah</a>
+        </div>
+      </div>
+      <div class="map-frame" style="border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,41,65,0.12);min-height:420px">
+        <iframe src="https://www.google.com/maps?q=Rua+Prof.+Maria+Edite+da+Paz+Nogueira,+44,+Santo+Ant%C3%B4nio,+Garanhuns+-+PE&amp;output=embed" style="width:100%;height:100%;border:0;min-height:420px;filter:grayscale(0.25)" title="Mapa da unidade"></iframe>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isTrabalhe }}" hint-placeholder-val="{{ false }}">
+    <section class="page-sec" style="padding:72px 40px 96px;max-width:1080px;margin:0 auto">
+      <sc-if value="{{ semVaga }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Trabalhe conosco</h6>
+          <h1 style="font-size:clamp(28px,7vw,48px);font-weight:500;letter-spacing:-0.03em;line-height:1.08;margin:0 0 18px;max-width:22ch">Faça parte de um time que serve bem por escolha</h1>
+          <p style="font-size:clamp(15px,4vw,17px);line-height:1.65;color:#444f62;max-width:66ch;margin:0 0 48px">O processo seletivo tem etapas. Esta é a primeira: um questionário para conhecermos seu perfil. Em caso de aprovação preliminar, entramos em contato para um encontro pessoal.</p>
+          <div style="margin:0 0 28px">
+            <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin-bottom:12px">Área de atuação</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <span onClick="{{ escolherBarbeiro }}" style="display:inline-flex;align-items:center;padding:12px 24px;border:1px solid #152941;border-radius:999px;font-size:14px;font-weight:500;color:#152941;cursor:pointer" style-hover="background:#152941;color:#fffefb">Barbeiro</span>
+              <span onClick="{{ escolherRecepcao }}" style="display:inline-flex;align-items:center;padding:12px 24px;border:1px solid #152941;border-radius:999px;font-size:14px;font-weight:500;color:#152941;cursor:pointer" style-hover="background:#152941;color:#fffefb">Recepcionista</span>
+            </div>
+          </div>
+          <div class="vaga-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+            <div onClick="{{ escolherBarbeiro }}" style="cursor:pointer;background:#fffefb;border-radius:14px;padding:clamp(22px,6vw,32px);box-shadow:0 0 0 1px rgba(21,41,65,0.12)" style-hover="box-shadow:0 0 0 1px rgba(180,162,131,0.7)">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+                <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8a7550">Vaga aberta</span>
+                <span style="font-size:11px;padding:4px 10px;border-radius:999px;background:#efe8dc;color:#152941">MEI</span>
+              </div>
+              <div style="font-size:24px;font-weight:500;letter-spacing:-0.02em">Barbeiro(a)</div>
+              <p style="font-size:14px;color:#6b7382;line-height:1.55;margin:10px 0 22px">Para quem tem paixão pelo ofício, facilidade de relacionamento e acredita que um corte muda a vida de alguém.</p>
+              <span style="display:inline-flex;align-items:center;gap:8px;font-size:14px;color:#8a7550">Iniciar candidatura →</span>
+            </div>
+            <div onClick="{{ escolherRecepcao }}" style="cursor:pointer;background:#fffefb;border-radius:14px;padding:clamp(22px,6vw,32px);box-shadow:0 0 0 1px rgba(21,41,65,0.12)" style-hover="box-shadow:0 0 0 1px rgba(180,162,131,0.7)">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+                <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8a7550">Vaga aberta</span>
+                <span style="font-size:11px;padding:4px 10px;border-radius:999px;background:#efe8dc;color:#152941">CLT</span>
+              </div>
+              <div style="font-size:24px;font-weight:500;letter-spacing:-0.02em">Recepcionista</div>
+              <p style="font-size:14px;color:#6b7382;line-height:1.55;margin:10px 0 22px">Primeira pessoa que o cliente encontra: comunicação clara, organização e adaptabilidade são indispensáveis.</p>
+              <span style="display:inline-flex;align-items:center;gap:8px;font-size:14px;color:#8a7550">Iniciar candidatura →</span>
+            </div>
+          </div>
+          <div class="banco-row" style="margin-top:18px;background:#fffefb;border-radius:14px;padding:24px clamp(20px,6vw,32px);box-shadow:0 0 0 1px rgba(21,41,65,0.12);display:flex;align-items:center;justify-content:space-between;gap:32px">
+            <div>
+              <div style="font-size:17px;font-weight:500">Banco de talentos</div>
+              <div style="font-size:14px;color:#6b7382;margin-top:5px">Nenhuma vaga combina com você agora? Deixe seu cadastro e avisamos quando abrir.</div>
+            </div>
+            <span class="cta-btn" onClick="{{ escolherTalentos }}" style="display:inline-flex;align-items:center;padding:12px 22px;border:1px solid rgba(21,41,65,0.18);border-radius:8px;font-size:14px;cursor:pointer;white-space:nowrap" style-hover="border-color:#b4a283;color:#152941">Entrar no banco</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ mostrarForm }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:8px">
+            <span onClick="{{ voltarVagas }}" style="font-size:13px;color:#6b7382;cursor:pointer" style-hover="color:#152941">← Todas as vagas</span>
+            <span style="font-size:12px;color:#6b7382">Etapa {{ passoAtual }} de {{ totalPassos }}</span>
+          </div>
+          <div style="height:3px;background:rgba(21,41,65,0.1);border-radius:999px;overflow:hidden;margin-bottom:34px">
+            <div style="height:100%;background:#b4a283;width:{{ progresso }}%"></div>
+          </div>
+          <h1 style="font-size:34px;font-weight:500;letter-spacing:-0.025em;margin:0 0 8px">{{ vagaTitulo }}</h1>
+          <p style="font-size:15px;color:#444f62;margin:0 0 36px">{{ passoDesc }}</p>
+
+          <div style="display:flex;flex-direction:column;gap:22px;background:#fffefb;border-radius:14px;padding:clamp(20px,6vw,36px);box-shadow:0 0 0 1px rgba(21,41,65,0.12)">
+            <sc-for list="{{ campos }}" as="c" hint-placeholder-count="5">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <label style="font-size:13px;font-weight:500;line-height:1.45">{{ c.label }}</label>
+                <sc-if value="{{ c.isTexto }}" hint-placeholder-val="{{ true }}">
+                  <input type="text" value="{{ c.valor }}" onChange="{{ c.onChange }}" placeholder="{{ c.placeholder }}" style="padding:11px 14px;border:1px solid rgba(21,41,65,0.18);border-radius:8px;font-size:14px;background:#f7f6f3;color:#152941">
+                </sc-if>
+                <sc-if value="{{ c.isArea }}" hint-placeholder-val="{{ false }}">
+                  <textarea rows="4" value="{{ c.valor }}" onChange="{{ c.onChange }}" placeholder="{{ c.placeholder }}" style="padding:12px 14px;border:1px solid rgba(21,41,65,0.18);border-radius:8px;font-size:14px;background:#f7f6f3;color:#152941;resize:vertical;line-height:1.55"></textarea>
+                </sc-if>
+                <sc-if value="{{ c.isEscolha }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <sc-for list="{{ c.opcoes }}" as="o" hint-placeholder-count="2">
+                      <span onClick="{{ o.onClick }}" style="padding:9px 16px;border:1px solid {{ o.borda }};border-radius:999px;font-size:13px;cursor:pointer;background:{{ o.fundo }};color:{{ o.cor }}">{{ o.label }}</span>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ c.isArquivo }}" hint-placeholder-val="{{ false }}">
+                  <input type="file" onChange="{{ c.onChange }}" style="padding:11px 14px;border:1px dashed rgba(21,41,65,0.3);border-radius:8px;font-size:13px;background:#f7f6f3;color:#444f62">
+                </sc-if>
+                <sc-if value="{{ c.isAceite }}" hint-placeholder-val="{{ false }}">
+                  <div onClick="{{ c.onChange }}" style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border:1px solid rgba(21,41,65,0.14);border-radius:8px;cursor:pointer;background:#f7f6f3">
+                    <span style="flex:none;width:18px;height:18px;border-radius:4px;border:1px solid {{ c.aceiteBorda }};background:{{ c.aceiteFundo }};margin-top:1px"></span>
+                    <span style="font-size:13px;color:#444f62;line-height:1.5">{{ c.ajuda }}</span>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ c.temAjuda }}" hint-placeholder-val="{{ false }}">
+                  <span style="font-size:12px;color:#8d94a1;line-height:1.5">{{ c.ajuda }}</span>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ temErroEnvio }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:16px;font-size:13px;color:#8a3a3a;background:#fbeeee;border-radius:8px;padding:12px 14px">{{ erroEnvio }}</div>
+          </sc-if>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:26px">
+            <span onClick="{{ passoAnterior }}" style="font-size:14px;color:#6b7382;cursor:pointer;padding:12px 0" style-hover="color:#152941">{{ labelVoltar }}</span>
+            <span onClick="{{ passoProximo }}" style="display:inline-flex;align-items:center;padding:14px 30px;border:1px solid #b4a283;border-radius:8px;font-size:15px;font-weight:500;color:#152941;cursor:pointer" style-hover="background:rgba(180,162,131,0.18)">{{ labelAvancar }}</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ enviado }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fffefb;border-radius:14px;padding:clamp(36px,10vw,64px) clamp(24px,8vw,56px);box-shadow:0 0 0 1px rgba(21,41,65,0.12);max-width:640px;margin:40px auto;text-align:center">
+          <div style="width:44px;height:44px;border-radius:999px;border:1px solid #b4a283;margin:0 auto 24px;display:flex;align-items:center;justify-content:center;color:#8a7550;font-size:20px">✓</div>
+          <h2 style="font-size:28px;font-weight:500;letter-spacing:-0.02em;margin:0 0 12px">Candidatura enviada</h2>
+          <p style="font-size:15px;line-height:1.6;color:#444f62;margin:0 0 28px">Obrigado pelo cuidado nas respostas. Vamos analisar seu perfil e, em caso de aprovação preliminar, entramos em contato pelo WhatsApp para agendar um encontro pessoal.</p>
+          <span onClick="{{ voltarVagas }}" style="display:inline-flex;align-items:center;padding:12px 24px;border:1px solid rgba(21,41,65,0.18);border-radius:8px;font-size:14px;cursor:pointer" style-hover="border-color:#b4a283;color:#152941">Voltar às vagas</span>
+        </div>
+      </sc-if>
+    </section>
+  </sc-if>
+
+  </main>
+
+  <footer class="footer-row" style="padding:28px clamp(20px,6vw,40px);border-top:1px solid rgba(21,41,65,0.1);display:flex;justify-content:space-between;gap:24px;font-size:12px;color:#8d94a1">
+    <span>Barbearia Seu Liah · Rua Prof. Maria Edite da Paz Nogueira, 44 · Garanhuns — PE</span>
+    <span>Construindo um legado desde 2019</span>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;corDestaque&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#b4a283&quot;,&quot;options&quot;:[&quot;#b4a283&quot;,&quot;#8a7550&quot;,&quot;#7972a9&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aparência&quot;}}">
+const WEB3FORMS_ACCESS_KEY = '1e7ab7ab-e6b6-419e-858d-25778345239b';
+
+class Component extends DCLogic {
+  state = {
+    page: 'home', vaga: null, step: 0, resp: {}, arquivos: {}, enviado: false,
+    enviando: false, erroEnvio: '', menuAberto: false
+  };
+
+  go = (p) => () => this.setState({ page: p, enviado: false, menuAberto: false });
+  toggleMenu = () => this.setState(s => ({ menuAberto: !s.menuAberto }));
+
+  formularios() {
+    const barbeiro = [
+      { desc: 'Primeiro, o básico para entrarmos em contato.', campos: [
+        { id: 'nome', label: 'Qual seu nome?', tipo: 'texto', placeholder: 'Nome completo' },
+        { id: 'idade', label: 'Qual sua idade?', tipo: 'texto', placeholder: 'Ex: 24' },
+        { id: 'tel', label: 'Telefone para contato', tipo: 'texto', placeholder: '(87) 90000-0000' },
+        { id: 'insta', label: 'Qual seu Instagram? Se tiver um profissional e um pessoal, informe o de trabalho.', tipo: 'texto', placeholder: '@seuperfil' },
+        { id: 'habitos', label: 'Costuma beber ou fumar com frequência?', tipo: 'escolha', opcoes: ['Não', 'Socialmente', 'Sim'] }
+      ]},
+      { desc: 'Agora sua trajetória na profissão.', campos: [
+        { id: 'trajetoria', label: 'Qual é a sua trajetória na profissão? Fale das suas experiências, de quando começou e dos cursos que fez para se aperfeiçoar.', tipo: 'area' },
+        { id: 'identificacao', label: 'O que te fez se identificar com a Barbearia Seu Liah? E o que te faz querer fazer parte do nosso time?', tipo: 'area' },
+        { id: 'ouviu', label: 'O que já ouviu falar da Barbearia Seu Liah antes de chegar até aqui?', tipo: 'area', ajuda: 'Se não tiver ouvido nada, pode deixar em branco.' }
+      ]},
+      { desc: 'Sobre atendimento e convivência.', campos: [
+        { id: 'atendimento', label: 'Como descreveria seu atendimento e relacionamento com o cliente? O que você busca entregar?', tipo: 'area' },
+        { id: 'equipe', label: 'Você tem facilidade para trabalhar em equipe?', tipo: 'escolha', opcoes: ['Sim', 'Em parte', 'Ainda desenvolvo isso'] },
+        { id: 'descricao', label: 'Se eu pedisse a alguém próximo que te descrevesse — no trabalho e como pessoa — como você acha que seria descrito(a)?', tipo: 'area' }
+      ]},
+      { desc: 'Para fechar.', campos: [
+        { id: 'porque', label: 'Diante de todos os candidatos, por que devemos te selecionar para a próxima etapa?', tipo: 'area', ajuda: 'Pense no que esperamos de quem vai nos representar junto aos clientes.' },
+        { id: 'cv', label: 'Envie seu currículo', tipo: 'arquivo' },
+        { id: 'lgpd', label: 'Privacidade', tipo: 'aceite', ajuda: 'Autorizo a Barbearia Seu Liah a tratar meus dados para fins deste processo seletivo, conforme a LGPD.' }
+      ]}
+    ];
+    const recepcao = [
+      { desc: 'Essa seção envolve dados pessoais. Queremos te conhecer melhor.', campos: [
+        { id: 'nome', label: 'Qual seu nome?', tipo: 'texto', placeholder: 'Nome completo' },
+        { id: 'apelido', label: 'Como gosta de ser chamado(a)?', tipo: 'texto' },
+        { id: 'idade', label: 'Qual sua idade?', tipo: 'texto' },
+        { id: 'email', label: 'E-mail', tipo: 'texto', placeholder: 'seu@email.com' },
+        { id: 'tel', label: 'Telefone para contato', tipo: 'texto', placeholder: '(87) 90000-0000' },
+        { id: 'endereco', label: 'Onde você mora? (endereço completo com CEP)', tipo: 'area' },
+        { id: 'redes', label: 'Suas redes sociais', tipo: 'texto', placeholder: '@seuperfil' }
+      ]},
+      { desc: 'Habilidades e disponibilidade.', campos: [
+        { id: 'excel', label: 'Possui experiência com Excel?', tipo: 'escolha', opcoes: ['Sim', 'Não'] },
+        { id: 'midias', label: 'Tem experiência com mídias sociais?', tipo: 'escolha', opcoes: ['Sim', 'Não'] },
+        { id: 'habitos', label: 'Este trabalho exige concentração, foco e postura profissional. Você acredita que seus hábitos pessoais podem interferir no seu desempenho ou no ambiente?', tipo: 'area' },
+        { id: 'horarios', label: 'Você tem flexibilidade de horários? Está disponível para fins de semana ou feriados, se necessário?', tipo: 'escolha', opcoes: ['Sim', 'Com aviso prévio', 'Não'] }
+      ]},
+      { desc: 'Agora conte mais um pouco sobre você.', campos: [
+        { id: 'identificacao', label: 'O que te fez se identificar com essa vaga?', tipo: 'area' },
+        { id: 'ouviu', label: 'O que você sabe ou já ouviu falar da Seu Liah antes de chegar até aqui?', tipo: 'area' },
+        { id: 'ideal', label: 'Na sua opinião, quais características não podem faltar para que um(a) recepcionista seja considerado(a) ideal?', tipo: 'area' },
+        { id: 'aprendizados', label: 'Independente do currículo, resuma os principais aprendizados das suas experiências (formais ou informais) e da vida.', tipo: 'area' },
+        { id: 'descricao', label: 'Se alguém próximo te descrevesse, no trabalho e como pessoa, como você acha que seria descrito(a)?', tipo: 'area' },
+        { id: 'incomodos', label: 'Como costuma lidar com as coisas que lhe incomodam?', tipo: 'area' }
+      ]},
+      { desc: 'Conte o que você faria — situações reais do dia a dia.', campos: [
+        { id: 'impressionar', label: 'Conte um exemplo em que conseguiu impressionar o cliente. O que fez para superar as expectativas?', tipo: 'area' },
+        { id: 'colega', label: 'Fale de um momento em que trabalhou com alguém que não estava cumprindo a parte dele. Como lidou com a situação?', tipo: 'area' },
+        { id: 'experiencia', label: 'Como um recepcionista pode impactar a experiência do cliente desde o primeiro contato? Dê um exemplo seu.', tipo: 'area' },
+        { id: 'irritado', label: 'O que você faria se um cliente chegasse irritado com a insatisfação de um serviço prestado?', tipo: 'area' },
+        { id: 'conviver', label: 'Como lida com situações em que precisa conviver com alguém de quem não gosta?', tipo: 'area' },
+        { id: 'meta', label: 'Qual a última meta que você estabeleceu ou que foi estipulada para você, e o que fez para alcançá-la?', tipo: 'area' },
+        { id: 'erro', label: 'Cite um erro que já cometeu na sua função e o que aprendeu com ele.', tipo: 'area' },
+        { id: 'vendas', label: 'Qual sua experiência com vendas ou em situações em que precisou sugerir produtos e serviços?', tipo: 'area' },
+        { id: 'comunicacao', label: 'A comunicação clara é essencial nessa função. Como você avalia a sua comunicação?', tipo: 'area' }
+      ]},
+      { desc: 'Para finalizar.', campos: [
+        { id: 'cv', label: 'Nos envie seu currículo', tipo: 'arquivo' },
+        { id: 'porque', label: 'Diante dos demais candidatos, por que deveríamos contratar você?', tipo: 'area' },
+        { id: 'lgpd', label: 'Privacidade', tipo: 'aceite', ajuda: 'Autorizo a Barbearia Seu Liah a tratar meus dados para fins deste processo seletivo, conforme a LGPD.' }
+      ]}
+    ];
+    const talentos = [
+      { desc: 'Cadastro rápido para avisarmos quando abrir uma vaga do seu perfil.', campos: [
+        { id: 'nome', label: 'Qual seu nome?', tipo: 'texto' },
+        { id: 'tel', label: 'Telefone para contato', tipo: 'texto', placeholder: '(87) 90000-0000' },
+        { id: 'area', label: 'Área de interesse', tipo: 'escolha', opcoes: ['Barbeiro', 'Recepção', 'Estética', 'Outra'] },
+        { id: 'sobre', label: 'Conte em poucas linhas sua experiência e o que você busca.', tipo: 'area' },
+        { id: 'cv', label: 'Currículo (opcional)', tipo: 'arquivo' },
+        { id: 'lgpd', label: 'Privacidade', tipo: 'aceite', ajuda: 'Autorizo o armazenamento dos meus dados no banco de talentos da Barbearia Seu Liah, conforme a LGPD.' }
+      ]}
+    ];
+    return { barbeiro, recepcao, talentos };
+  }
+
+  titulos = { barbeiro: 'Processo seletivo · Barbeiro(a)', recepcao: 'Processo seletivo · Recepção', talentos: 'Banco de talentos' };
+
+  setResp = (id) => (e) => {
+    if (e && e.target && e.target.files) {
+      const f = e.target.files[0] || null;
+      this.setState(s => ({
+        resp: Object.assign({}, s.resp, { [id]: f ? f.name : '' }),
+        arquivos: Object.assign({}, s.arquivos, { [id]: f })
+      }));
+      return;
+    }
+    const v = e && e.target ? e.target.value : e;
+    this.setState(s => ({ resp: Object.assign({}, s.resp, { [id]: v }) }));
+  };
+
+  toggleAceite = (id) => () => this.setState(s => ({ resp: Object.assign({}, s.resp, { [id]: !s.resp[id] }) }));
+  escolher = (id, v) => () => this.setState(s => ({ resp: Object.assign({}, s.resp, { [id]: v }) }));
+
+  enviarCandidatura = () => {
+    const s = this.state;
+    const passos = this.formularios()[s.vaga] || [];
+    const fd = new FormData();
+    fd.append('access_key', WEB3FORMS_ACCESS_KEY);
+    fd.append('subject', 'Nova candidatura — ' + (this.titulos[s.vaga] || s.vaga));
+    fd.append('from_name', 'Site Seu Liah · Trabalhe conosco');
+    passos.forEach(p => p.campos.forEach(c => {
+      if (c.tipo === 'arquivo') return;
+      fd.append(c.label, s.resp[c.id] != null ? String(s.resp[c.id]) : '');
+    }));
+    if (s.arquivos.cv) fd.append('curriculo', s.arquivos.cv, s.arquivos.cv.name);
+
+    this.setState({ enviando: true, erroEnvio: '' });
+    fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd })
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.success) {
+          this.setState({ enviando: false, enviado: true, vaga: null, step: 0, resp: {}, arquivos: {} });
+        } else {
+          this.setState({ enviando: false, erroEnvio: 'Não foi possível enviar agora. Tente novamente em instantes.' });
+        }
+      })
+      .catch(() => this.setState({ enviando: false, erroEnvio: 'Não foi possível enviar agora. Verifique sua internet e tente novamente.' }));
+  };
+
+  renderVals() {
+    const s = this.state;
+    const forms = this.formularios();
+    const passos = s.vaga ? forms[s.vaga] : null;
+    const passo = passos ? passos[s.step] : null;
+    const acento = this.props.corDestaque || '#b4a283';
+
+    const campos = passo ? passo.campos.map(c => ({
+      label: c.label,
+      placeholder: c.placeholder || '',
+      valor: s.resp[c.id] || '',
+      onChange: c.tipo === 'aceite' ? this.toggleAceite(c.id) : this.setResp(c.id),
+      isTexto: c.tipo === 'texto', isArea: c.tipo === 'area', isEscolha: c.tipo === 'escolha',
+      isArquivo: c.tipo === 'arquivo', isAceite: c.tipo === 'aceite',
+      temAjuda: !!c.ajuda && c.tipo !== 'aceite', ajuda: c.ajuda || '',
+      aceiteBorda: s.resp[c.id] ? acento : 'rgba(21,41,65,0.3)',
+      aceiteFundo: s.resp[c.id] ? acento : 'transparent',
+      opcoes: (c.opcoes || []).map(o => ({
+        label: o, onClick: this.escolher(c.id, o),
+        borda: s.resp[c.id] === o ? acento : 'rgba(21,41,65,0.18)',
+        fundo: s.resp[c.id] === o ? '#efe8dc' : 'transparent',
+        cor: s.resp[c.id] === o ? '#152941' : '#444f62'
+      }))
+    })) : [];
+
+    return {
+      irHome: this.go('home'), irServicos: this.go('servicos'), irSobre: this.go('sobre'),
+      irUnidade: this.go('unidade'), irTrabalhe: this.go('trabalhe'),
+      isHome: s.page === 'home', isServicos: s.page === 'servicos', isSobre: s.page === 'sobre',
+      isUnidade: s.page === 'unidade', isTrabalhe: s.page === 'trabalhe',
+      menuAberto: s.menuAberto, toggleMenu: this.toggleMenu, menuIcone: s.menuAberto ? '✕' : '☰',
+      servicos: [
+        { nome: 'Lavagem especial', img: 'img/servicos2/lavagem-especial.png' },
+        { nome: 'Limpeza de pele', img: 'img/servicos2/limpeza-de-pele.png' },
+        { nome: 'Sobrancelha', img: 'img/servicos2/sobrancelha.png' },
+        { nome: 'Depilação de orelha', img: 'img/servicos2/depilacao-orelha.png' },
+        { nome: 'Depilação de nariz', img: 'img/servicos2/depilacao-nariz.png' },
+        { nome: 'Prótese capilar', img: 'img/servicos2/protese-capilar.png' },
+        { nome: 'Manicure', img: 'img/servicos2/manicure.png' },
+        { nome: 'Pedicure', img: 'img/servicos2/pedicure.png' }
+      ],
+      timeline: [
+        { ano: '13 · ABR · 2019', titulo: 'O início', texto: 'Nasceu como Mustache, em 22m² e com duas cadeiras.' },
+        { ano: '2020', titulo: 'Primeiro grande passo', texto: 'Mesmo na pandemia, a mudança para o centro da cidade.' },
+        { ano: '2021', titulo: 'Nasce a Seu Liah', texto: 'O nome homenageia Mário Leal, avô do fundador.' },
+        { ano: '2021 → hoje', titulo: 'Consolidação', texto: 'Equipe maior, processos internos e padrão de qualidade.' },
+        { ano: 'META 2028', titulo: '1.000 atendimentos/mês', texto: 'Crescer de forma sustentável, com 98% de satisfação.' }
+      ],
+      valores: [
+        { num: '01', nome: 'Jogo aberto', desc: 'Confiança se constrói com clareza. Quem julga sem conversar cria conflito, e reclamar sem propor solução é fazer parte do problema.' },
+        { num: '02', nome: 'Senso de coletividade', desc: 'Resolver conflitos com maturidade, celebrar as conquistas do time e aprender juntos. A vaidade fica do lado de fora.' },
+        { num: '03', nome: 'Postura que inspira', desc: 'Fazer o certo mesmo quando ninguém está olhando. Respeitar na discordância, não terceirizar culpa, inspirar pelo exemplo.' },
+        { num: '04', nome: 'Encantamento do cliente', desc: 'O tempo do cliente é prioridade. Interesse genuíno pela satisfação dele e atenção aos detalhes — a primeira impressão é a que marca.' },
+        { num: '05', nome: 'Alta performance', desc: 'Aprendizado contínuo, compromisso com o resultado e paixão pela jornada. Talento sem maturidade não sustenta crescimento.' }
+      ],
+      equipe: [
+        { nome: 'Jackson', cargo: 'Barbeiro', foto: 'img/equipe/jackson.jpeg' },
+        { nome: 'Gabriel', cargo: 'Barbeiro', foto: 'img/equipe/gabriel.jpeg' },
+        { nome: 'Brennan', cargo: 'Barbeiro', foto: 'img/equipe/brennan.jpeg' },
+        { nome: 'Kauã', cargo: 'Barbeiro', foto: 'img/equipe/kaua.jpeg' },
+        { nome: 'Mateus', cargo: 'Barbeiro', foto: 'img/equipe/mateus.jpeg' },
+        { nome: 'Anne', cargo: 'Auxiliar de barbearia', foto: 'img/equipe/anne.jpeg' },
+        { nome: 'Bruna', cargo: 'Recepcionista', foto: 'img/equipe/bruna.jpeg' }
+      ],
+
+      semVaga: s.page === 'trabalhe' && !s.vaga && !s.enviado,
+      mostrarForm: !!s.vaga && !s.enviado,
+      enviado: s.enviado,
+      escolherBarbeiro: () => this.setState({ vaga: 'barbeiro', step: 0 }),
+      escolherRecepcao: () => this.setState({ vaga: 'recepcao', step: 0 }),
+      escolherTalentos: () => this.setState({ vaga: 'talentos', step: 0 }),
+      voltarVagas: () => this.setState({ vaga: null, step: 0, enviado: false, resp: {} }),
+      vagaTitulo: s.vaga ? this.titulos[s.vaga] : '',
+      passoDesc: passo ? passo.desc : '',
+      passoAtual: s.step + 1,
+      totalPassos: passos ? passos.length : 1,
+      progresso: passos ? Math.round(((s.step + 1) / passos.length) * 100) : 0,
+      campos,
+      labelVoltar: s.step === 0 ? 'Cancelar' : 'Voltar',
+      labelAvancar: passos && s.step === passos.length - 1 ? (s.enviando ? 'Enviando…' : 'Enviar candidatura') : 'Continuar',
+      passoAnterior: () => s.step === 0 ? this.setState({ vaga: null, resp: {} }) : this.setState({ step: s.step - 1 }),
+      passoProximo: () => {
+        if (s.enviando) return;
+        if (passos && s.step === passos.length - 1) this.enviarCandidatura();
+        else this.setState({ step: s.step + 1 });
+      },
+      erroEnvio: s.erroEnvio,
+      temErroEnvio: !!s.erroEnvio,
+    };
+  }
+}
+</script>
+</body>
+</html>
