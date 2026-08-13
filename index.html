@@ -164,6 +164,24 @@
       </section>
 
       <section style="padding:0 clamp(20px,6vw,40px) 96px">
+        <div class="page-sec split-2" style="max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px">
+          <div>
+            <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Onde estamos</h6>
+            <h2 style="font-size:clamp(22px,6vw,32px);font-weight:500;letter-spacing:-0.025em;margin:0 0 18px">Garanhuns, Santo Antônio</h2>
+            <p style="font-size:16px;line-height:1.6;color:#444f62;margin:0 0 26px">Rua Prof. Maria Edite da Paz Nogueira, 44<br>Santo Antônio · Garanhuns — PE</p>
+            <div style="display:grid;gap:1px;background:rgba(21,41,65,0.12);border-radius:8px;overflow:hidden;max-width:440px">
+              <div style="display:flex;justify-content:space-between;padding:14px 18px;background:#fffefb;font-size:14px"><span>Segunda a sexta</span><span style="color:#444f62">09h — 20h</span></div>
+              <div style="display:flex;justify-content:space-between;padding:14px 18px;background:#fffefb;font-size:14px"><span>Sábado</span><span style="color:#444f62">09h — 17h</span></div>
+              <div style="display:flex;justify-content:space-between;padding:14px 18px;background:#fffefb;font-size:14px"><span>Domingo</span><span style="color:#8d94a1">Fechado</span></div>
+            </div>
+          </div>
+          <div class="map-frame" style="border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,41,65,0.12);min-height:340px">
+            <iframe src="https://www.google.com/maps?q=Rua+Prof.+Maria+Edite+da+Paz+Nogueira,+44,+Santo+Ant%C3%B4nio,+Garanhuns+-+PE&amp;output=embed" style="width:100%;height:100%;border:0;min-height:340px;filter:grayscale(0.25)" title="Mapa da unidade"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding:0 clamp(20px,6vw,40px) 96px">
         <div class="cta-split" style="max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;padding-top:56px;border-top:1px solid rgba(21,41,65,0.1)">
           <div>
             <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Trabalhe conosco</h6>
@@ -206,22 +224,6 @@
         <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Sobre nós</h6>
         <h1 style="font-size:clamp(28px,7vw,48px);font-weight:500;letter-spacing:-0.03em;line-height:1.08;margin:0 0 20px;max-width:24ch">Construindo um legado desde 2019</h1>
         <p style="font-size:clamp(15px,4vw,17px);line-height:1.65;color:#444f62;max-width:70ch;margin:0">A Barbearia Seu Liah nasceu com o propósito de ir além dos serviços tradicionais: um ambiente onde atendimento de excelência, profissionalismo e desenvolvimento humano caminham juntos.</p>
-      </section>
-
-      <section class="page-sec split-2" style="display:grid;grid-template-columns:1fr 1fr;gap:56px;padding:0 40px 80px;max-width:1400px;margin:0 auto">
-        <div>
-          <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Onde estamos</h6>
-          <h2 style="font-size:clamp(22px,6vw,32px);font-weight:500;letter-spacing:-0.025em;margin:0 0 18px">Garanhuns, Santo Antônio</h2>
-          <p style="font-size:16px;line-height:1.6;color:#444f62;margin:0 0 26px">Rua Prof. Maria Edite da Paz Nogueira, 44<br>Santo Antônio · Garanhuns — PE</p>
-          <div style="display:grid;gap:1px;background:rgba(21,41,65,0.12);border-radius:8px;overflow:hidden;max-width:440px">
-            <div style="display:flex;justify-content:space-between;padding:14px 18px;background:#fffefb;font-size:14px"><span>Segunda a sexta</span><span style="color:#444f62">09h — 20h</span></div>
-            <div style="display:flex;justify-content:space-between;padding:14px 18px;background:#fffefb;font-size:14px"><span>Sábado</span><span style="color:#444f62">09h — 17h</span></div>
-            <div style="display:flex;justify-content:space-between;padding:14px 18px;background:#fffefb;font-size:14px"><span>Domingo</span><span style="color:#8d94a1">Fechado</span></div>
-          </div>
-        </div>
-        <div class="map-frame" style="border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,41,65,0.12);min-height:340px">
-          <iframe src="https://www.google.com/maps?q=Rua+Prof.+Maria+Edite+da+Paz+Nogueira,+44,+Santo+Ant%C3%B4nio,+Garanhuns+-+PE&amp;output=embed" style="width:100%;height:100%;border:0;min-height:340px;filter:grayscale(0.25)" title="Mapa da unidade"></iframe>
-        </div>
       </section>
 
       <section class="page-sec" style="padding:0 40px 80px">
@@ -592,7 +594,7 @@ class Component extends DCLogic {
         { ano: '2020', titulo: 'Primeiro grande passo', texto: 'Mesmo na pandemia, a mudança para o centro da cidade.' },
         { ano: '2021', titulo: 'Nasce a Seu Liah', texto: 'O nome homenageia Mário Leal, avô do fundador.' },
         { ano: '2021 → hoje', titulo: 'Consolidação', texto: 'Equipe maior, processos internos e padrão de qualidade.' },
-        { ano: 'META 2028', titulo: '1.000 atendimentos/mês', texto: 'Crescer de forma sustentável, com 98% de satisfação.' }
+        { ano: 'META 2028', titulo: '1.000 atendimentos/mês', texto: 'Atender mais de 1.000 clientes por mês, com uma taxa de satisfação mínima de 98%.' }
       ],
       valores: [
         { num: '01', nome: 'Jogo aberto', desc: 'Confiança se constrói com clareza. Quem julga sem conversar cria conflito, e reclamar sem propor solução é fazer parte do problema.' },
