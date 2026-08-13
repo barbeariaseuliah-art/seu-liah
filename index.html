@@ -20,8 +20,12 @@
   :focus-visible { outline:2px solid #b4a283; outline-offset:2px; }
   img { max-width:100%; }
   .menu-btn { display:none; }
+  @media (max-width: 1024px) and (min-width: 761px) {
+    .grid-2img { grid-template-columns:repeat(2,1fr) !important; }
+  }
   @media (max-width: 760px) {
     .site-header { padding:12px 16px !important; gap:12px !important; }
+    .hero-sec { min-height:58vh !important; }
     .nav-links { display:none !important; }
     .nav-actions a { padding:8px 12px !important; font-size:12px !important; }
     .menu-btn { display:flex !important; }
@@ -56,7 +60,7 @@
     <nav class="nav-links" style="display:flex;align-items:center;gap:26px;font-size:13px">
       <span onClick="{{ irHome }}" style="cursor:pointer;color:#444f62;padding-bottom:2px" style-hover="color:#152941">Início</span>
       <span onClick="{{ irServicos }}" style="cursor:pointer;color:#444f62;padding-bottom:2px" style-hover="color:#152941">Serviços</span>
-      <span onClick="{{ irSobre }}" style="cursor:pointer;color:#444f62;padding-bottom:2px" style-hover="color:#152941">Sobre</span>
+      <span onClick="{{ irSobre }}" style="cursor:pointer;color:#444f62;padding-bottom:2px" style-hover="color:#152941">Nossa Cultura</span>
       <span onClick="{{ irUnidade }}" style="cursor:pointer;color:#444f62;padding-bottom:2px" style-hover="color:#152941">Unidade</span>
       <span onClick="{{ irTrabalhe }}" style="cursor:pointer;color:#444f62;padding-bottom:2px" style-hover="color:#152941">Trabalhe conosco</span>
     </nav>
@@ -70,7 +74,7 @@
     <div style="position:sticky;top:0;z-index:29;display:flex;flex-direction:column;padding:8px 20px 20px;background:#f7f6f3;border-bottom:1px solid rgba(21,41,65,0.1)">
       <span onClick="{{ irHome }}" style="padding:13px 0;font-size:15px;color:#444f62;border-top:1px solid rgba(21,41,65,0.08)">Início</span>
       <span onClick="{{ irServicos }}" style="padding:13px 0;font-size:15px;color:#444f62;border-top:1px solid rgba(21,41,65,0.08)">Serviços</span>
-      <span onClick="{{ irSobre }}" style="padding:13px 0;font-size:15px;color:#444f62;border-top:1px solid rgba(21,41,65,0.08)">Sobre</span>
+      <span onClick="{{ irSobre }}" style="padding:13px 0;font-size:15px;color:#444f62;border-top:1px solid rgba(21,41,65,0.08)">Nossa Cultura</span>
       <span onClick="{{ irUnidade }}" style="padding:13px 0;font-size:15px;color:#444f62;border-top:1px solid rgba(21,41,65,0.08)">Unidade</span>
       <span onClick="{{ irTrabalhe }}" style="padding:13px 0;font-size:15px;color:#444f62;border-top:1px solid rgba(21,41,65,0.08)">Trabalhe conosco</span>
     </div>
@@ -80,7 +84,7 @@
 
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <div>
-      <section style="position:relative;min-height:82vh;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(88px,20vw,120px) clamp(20px,6vw,40px) clamp(44px,10vw,72px);overflow:hidden">
+      <section class="hero-sec" style="position:relative;min-height:82vh;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(88px,20vw,120px) clamp(20px,6vw,40px) clamp(44px,10vw,72px);overflow:hidden">
         <img src="img/hero-operacao.jpeg" alt="Salão da Barbearia Seu Liah em pleno atendimento" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%">
         <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(247,246,243,0.92), rgba(247,246,243,0.86) 55%, rgba(247,246,243,0.96))"></div>
         <div style="position:relative;max-width:1400px;margin:0 auto;width:100%">
@@ -100,12 +104,29 @@
       </section>
 
       <section style="padding:0 clamp(20px,6vw,40px) 88px">
-        <div class="grid-2img" style="max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:18px;align-items:start">
-          <div onClick="{{ irServicos }}" style="cursor:pointer;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,41,65,0.12)" style-hover="box-shadow:0 0 0 1px rgba(180,162,131,0.7)">
-            <img src="img/destaques/limpeza-de-pele.png" alt="Limpeza de pele na Barbearia Seu Liah" style="width:100%;height:auto;display:block" />
-          </div>
-          <div onClick="{{ irServicos }}" style="cursor:pointer;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,41,65,0.12)" style-hover="box-shadow:0 0 0 1px rgba(180,162,131,0.7)">
-            <img src="img/destaques/lavagem-especial.png" alt="Lavagem especial na Barbearia Seu Liah" style="width:100%;height:auto;display:block" />
+        <div style="max-width:1400px;margin:0 auto">
+          <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 16px">Serviços em destaque</h6>
+          <div class="grid-2img" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:start">
+            <div onClick="{{ irServicos }}" style="cursor:pointer;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,41,65,0.12)" style-hover="box-shadow:0 0 0 1px rgba(180,162,131,0.7)">
+              <img src="img/destaques/limpeza-de-pele.png" alt="Limpeza de pele na Barbearia Seu Liah" style="width:100%;height:auto;display:block" />
+            </div>
+            <div onClick="{{ irServicos }}" style="cursor:pointer;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,41,65,0.12)" style-hover="box-shadow:0 0 0 1px rgba(180,162,131,0.7)">
+              <img src="img/destaques/lavagem-especial.png" alt="Lavagem especial na Barbearia Seu Liah" style="width:100%;height:auto;display:block" />
+            </div>
+            <div onClick="{{ irServicos }}" style="position:relative;cursor:pointer;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,41,65,0.12)" style-hover="box-shadow:0 0 0 1px rgba(180,162,131,0.7)">
+              <img src="img/destaques/corte.jpeg" alt="Corte na Barbearia Seu Liah" style="width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 25%;display:block" />
+              <div style="position:absolute;left:0;right:0;bottom:0;padding:18px 16px 14px;background:linear-gradient(0deg, rgba(0,0,0,0.7), rgba(0,0,0,0))">
+                <div style="font-size:14px;font-weight:700;letter-spacing:0.02em;text-transform:uppercase;color:#fffefb">Corte</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.82);margin-top:3px">Precisão e acabamento em cada estilo.</div>
+              </div>
+            </div>
+            <div onClick="{{ irServicos }}" style="position:relative;cursor:pointer;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,41,65,0.12)" style-hover="box-shadow:0 0 0 1px rgba(180,162,131,0.7)">
+              <img src="img/destaques/barba.jpeg" alt="Barba na Barbearia Seu Liah" style="width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 30%;display:block" />
+              <div style="position:absolute;left:0;right:0;bottom:0;padding:18px 16px 14px;background:linear-gradient(0deg, rgba(0,0,0,0.7), rgba(0,0,0,0))">
+                <div style="font-size:14px;font-weight:700;letter-spacing:0.02em;text-transform:uppercase;color:#fffefb">Barba</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.82);margin-top:3px">Toalha quente e navalha para um acabamento impecável.</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -125,17 +146,17 @@
         <div style="max-width:1400px;margin:0 auto">
           <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:8px">
             <div>
-              <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">CULTURA SEU LIAH</h6>
-              <h2 style="font-size:clamp(24px,6vw,38px);font-weight:500;letter-spacing:-0.025em;margin:0">NOSSOS VALORES</h2>
+              <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">TRAJETÓRIA</h6>
+              <h2 style="font-size:clamp(24px,6vw,38px);font-weight:500;letter-spacing:-0.025em;margin:0">NOSSA HISTÓRIA</h2>
             </div>
 
           </div>
-          <div style="display:flex;flex-direction:column">
-            <sc-for list="{{ valores }}" as="v" hint-placeholder-count="5">
-              <div class="valrow" style="display:grid;grid-template-columns:96px 1fr 1.2fr;gap:32px;align-items:baseline;padding:32px 4px;border-top:1px solid rgba(21,41,65,0.14)" style-hover="background:rgba(180,162,131,0.07)">
-                <span style="font-size:clamp(24px,6vw,34px);font-weight:600;letter-spacing:-0.02em;color:#b4a283">{{ v.num }}</span>
-                <span style="font-size:clamp(19px,5vw,26px);font-weight:600;letter-spacing:-0.02em;line-height:1.2;text-transform:uppercase">{{ v.nome }}</span>
-                <span style="font-size:15px;line-height:1.6;color:#444f62">{{ v.desc }}</span>
+          <div class="timeline-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(21,41,65,0.12);border-radius:14px;overflow:hidden">
+            <sc-for list="{{ timeline }}" as="t" hint-placeholder-count="5">
+              <div style="background:#fffefb;padding:26px 22px 30px">
+                <div style="font-size:12px;font-weight:600;letter-spacing:0.06em;color:#8a7550">{{ t.ano }}</div>
+                <div style="font-size:15px;font-weight:500;margin-top:10px">{{ t.titulo }}</div>
+                <div style="font-size:13px;line-height:1.55;color:#6b7382;margin-top:8px">{{ t.texto }}</div>
               </div>
             </sc-for>
           </div>
@@ -187,15 +208,19 @@
         <p style="font-size:clamp(15px,4vw,17px);line-height:1.65;color:#444f62;max-width:70ch;margin:0">A Barbearia Seu Liah nasceu com o propósito de ir além dos serviços tradicionais: um ambiente onde atendimento de excelência, profissionalismo e desenvolvimento humano caminham juntos.</p>
       </section>
 
-      <section class="page-sec" style="padding:0 40px 80px;max-width:1400px;margin:0 auto">
-        <div class="timeline-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(21,41,65,0.12);border-radius:14px;overflow:hidden">
-          <sc-for list="{{ timeline }}" as="t" hint-placeholder-count="5">
-            <div style="background:#fffefb;padding:26px 22px 30px">
-              <div style="font-size:12px;font-weight:600;letter-spacing:0.06em;color:#8a7550">{{ t.ano }}</div>
-              <div style="font-size:15px;font-weight:500;margin-top:10px">{{ t.titulo }}</div>
-              <div style="font-size:13px;line-height:1.55;color:#6b7382;margin-top:8px">{{ t.texto }}</div>
-            </div>
-          </sc-for>
+      <section class="page-sec split-2" style="display:grid;grid-template-columns:1fr 1fr;gap:56px;padding:0 40px 80px;max-width:1400px;margin:0 auto">
+        <div>
+          <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Onde estamos</h6>
+          <h2 style="font-size:clamp(22px,6vw,32px);font-weight:500;letter-spacing:-0.025em;margin:0 0 18px">Garanhuns, Santo Antônio</h2>
+          <p style="font-size:16px;line-height:1.6;color:#444f62;margin:0 0 26px">Rua Prof. Maria Edite da Paz Nogueira, 44<br>Santo Antônio · Garanhuns — PE</p>
+          <div style="display:grid;gap:1px;background:rgba(21,41,65,0.12);border-radius:8px;overflow:hidden;max-width:440px">
+            <div style="display:flex;justify-content:space-between;padding:14px 18px;background:#fffefb;font-size:14px"><span>Segunda a sexta</span><span style="color:#444f62">09h — 20h</span></div>
+            <div style="display:flex;justify-content:space-between;padding:14px 18px;background:#fffefb;font-size:14px"><span>Sábado</span><span style="color:#444f62">09h — 17h</span></div>
+            <div style="display:flex;justify-content:space-between;padding:14px 18px;background:#fffefb;font-size:14px"><span>Domingo</span><span style="color:#8d94a1">Fechado</span></div>
+          </div>
+        </div>
+        <div class="map-frame" style="border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,41,65,0.12);min-height:340px">
+          <iframe src="https://www.google.com/maps?q=Rua+Prof.+Maria+Edite+da+Paz+Nogueira,+44,+Santo+Ant%C3%B4nio,+Garanhuns+-+PE&amp;output=embed" style="width:100%;height:100%;border:0;min-height:340px;filter:grayscale(0.25)" title="Mapa da unidade"></iframe>
         </div>
       </section>
 
@@ -211,16 +236,20 @@
               <p style="font-size:clamp(18px,5vw,24px);line-height:1.3;font-weight:500;letter-spacing:-0.015em;margin:0">1.000 clientes por mês até 2028, com 98% de satisfação e compromisso inegociável com a excelência.</p>
             </div>
           </div>
-          <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 4px">Valores · pirâmide cultural</h6>
-          <div style="display:flex;flex-direction:column">
-            <sc-for list="{{ valores }}" as="v" hint-placeholder-count="5">
-              <div class="valrow" style="display:grid;grid-template-columns:76px 1fr 1.2fr;gap:28px;align-items:baseline;padding:26px 4px;border-top:1px solid rgba(21,41,65,0.14)">
-                <span style="font-size:13px;letter-spacing:0.1em;color:#6b7382">{{ v.num }}</span>
-                <span style="font-size:clamp(18px,5vw,24px);font-weight:500;letter-spacing:-0.02em;line-height:1.2">{{ v.nome }}</span>
-                <span style="font-size:15px;line-height:1.6;color:#444f62">{{ v.desc }}</span>
-              </div>
-            </sc-for>
-          </div>
+        </div>
+      </section>
+
+      <section class="page-sec" style="padding:0 40px 96px;max-width:1400px;margin:0 auto">
+        <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Cultura Seu Liah</h6>
+        <h2 style="font-size:clamp(24px,6vw,38px);font-weight:500;letter-spacing:-0.025em;margin:0 0 8px">NOSSOS VALORES</h2>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ valores }}" as="v" hint-placeholder-count="5">
+            <div class="valrow" style="display:grid;grid-template-columns:96px 1fr 1.2fr;gap:32px;align-items:baseline;padding:32px 4px;border-top:1px solid rgba(21,41,65,0.14)" style-hover="background:rgba(180,162,131,0.07)">
+              <span style="font-size:clamp(24px,6vw,34px);font-weight:600;letter-spacing:-0.02em;color:#b4a283">{{ v.num }}</span>
+              <span style="font-size:clamp(19px,5vw,26px);font-weight:600;letter-spacing:-0.02em;line-height:1.2;text-transform:uppercase">{{ v.nome }}</span>
+              <span style="font-size:15px;line-height:1.6;color:#444f62">{{ v.desc }}</span>
+            </div>
+          </sc-for>
         </div>
       </section>
 
