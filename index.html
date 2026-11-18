@@ -3,6 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google tag (gtag.js) - Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-10952360551"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-10952360551');
+  // Conversao "Contato": clique em Agendar (CashBarber) ou WhatsApp
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (!a) return;
+    var href = a.href || '';
+    if (href.indexOf('cashbarber.com.br') !== -1 || href.indexOf('wa.me/') !== -1) {
+      gtag('event', 'conversion', {
+        'send_to': 'AW-10952360551/xEeNCOH8ncMZEOeEv-Yo',
+        'transport_type': 'beacon'
+      });
+    }
+  }, true);
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
