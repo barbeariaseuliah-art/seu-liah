@@ -63,6 +63,42 @@
     .footer-row { flex-direction:column !important; gap:8px !important; text-align:center !important; }
     .map-frame { min-height:260px !important; }
   }
+  .rec-card { all:unset; box-sizing:border-box; display:flex; flex-direction:column; cursor:pointer; background:#fffefb; border-radius:14px; overflow:hidden; box-shadow:0 0 0 1px rgba(21,41,65,0.12); color:#152941; text-align:left; transition:transform .35s ease, box-shadow .35s ease; animation:recFadeUp .6s ease both; }
+  .rec-card:hover { transform:translateY(-4px); box-shadow:0 0 0 1px rgba(180,162,131,0.7), 0 18px 40px -22px rgba(21,41,65,0.35); }
+  .rec-card:focus-visible { outline:2px solid #b4a283; outline-offset:3px; }
+  .rec-img { aspect-ratio:16/9; overflow:hidden; background:#efe8dc; }
+  .rec-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s ease; }
+  .rec-card:hover .rec-img img { transform:scale(1.04); }
+  .rec-icon { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:999px; border:1px solid rgba(180,162,131,0.6); color:#8a7550; }
+  .rec-cta { display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:500; color:#8a7550; }
+  .rec-seta { transition:transform .3s ease; }
+  .rec-card:hover .rec-seta { transform:translateX(4px); }
+  .rec-overlay { position:fixed; inset:0; z-index:100; background:rgba(21,41,65,0.55); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; padding:24px; animation:recFade .25s ease both; }
+  .rec-modal { width:min(760px,100%); height:min(88vh,920px); background:#fffefb; border-radius:16px; box-shadow:0 30px 80px -30px rgba(0,0,0,0.5); display:flex; flex-direction:column; overflow:hidden; animation:recPop .3s ease both; }
+  .rec-modal-top { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px 14px 22px; border-bottom:1px solid rgba(21,41,65,0.1); }
+  .rec-ext { display:inline-flex; align-items:center; gap:6px; padding:9px 14px; border:1px solid rgba(21,41,65,0.18); border-radius:8px; font-size:13px; color:#152941; white-space:nowrap; }
+  .rec-ext:hover { border-color:#b4a283; color:#152941; }
+  .rec-close { width:38px; height:38px; flex:none; border:0; border-radius:999px; background:#f1efea; color:#152941; font-size:16px; cursor:pointer; }
+  .rec-close:hover { background:#efe8dc; }
+  .rec-frame { position:relative; flex:1; background:#f1efea; }
+  .rec-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .rec-loading { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; font-size:13px; color:#6b7382; }
+  .rec-spin { width:28px; height:28px; border-radius:999px; border:2px solid rgba(180,162,131,0.3); border-top-color:#b4a283; animation:recSpin 0.9s linear infinite; }
+  @keyframes recFadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+  @keyframes recFade { from { opacity:0; } to { opacity:1; } }
+  @keyframes recPop { from { opacity:0; transform:translateY(16px) scale(.98); } to { opacity:1; transform:none; } }
+  @keyframes recSpin { to { transform:rotate(360deg); } }
+  @media (max-width: 760px) {
+    .rec-overlay { padding:0; }
+    .rec-modal { width:100%; height:100%; border-radius:0; }
+    .rec-modal-top { padding:10px 10px 10px 16px; }
+    .rec-ext-long { display:none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rec-card, .rec-overlay, .rec-modal { animation:none; }
+    .rec-card, .rec-img img, .rec-seta { transition:none; }
+    .rec-card:hover, .rec-card:hover .rec-img img, .rec-card:hover .rec-seta { transform:none; }
+  }
   @media (max-width: 480px) {
     .timeline-grid { grid-template-columns:1fr !important; }
     .equipe-grid { grid-template-columns:repeat(2,1fr) !important; }
@@ -318,34 +354,35 @@
       <sc-if value="{{ semVaga }}" hint-placeholder-val="{{ true }}">
         <div>
           <h6 style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin:0 0 12px">Trabalhe conosco</h6>
-          <h1 style="font-size:clamp(28px,7vw,48px);font-weight:500;letter-spacing:-0.03em;line-height:1.08;margin:0 0 18px;max-width:22ch">Faça parte de um time que serve bem por escolha</h1>
-          <p style="font-size:clamp(15px,4vw,17px);line-height:1.65;color:#444f62;max-width:66ch;margin:0 0 48px">O processo seletivo tem etapas. Esta é a primeira: um questionário para conhecermos seu perfil. Em caso de aprovação preliminar, entramos em contato para um encontro pessoal.</p>
-          <div style="margin:0 0 28px">
-            <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin-bottom:12px">Área de atuação</div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap">
-              <span onClick="{{ escolherBarbeiro }}" style="display:inline-flex;align-items:center;padding:12px 24px;border:1px solid #152941;border-radius:999px;font-size:14px;font-weight:500;color:#152941;cursor:pointer" style-hover="background:#152941;color:#fffefb">Barbeiro</span>
-              <span onClick="{{ escolherRecepcao }}" style="display:inline-flex;align-items:center;padding:12px 24px;border:1px solid #152941;border-radius:999px;font-size:14px;font-weight:500;color:#152941;cursor:pointer" style-hover="background:#152941;color:#fffefb">Recepcionista</span>
-            </div>
-          </div>
-          <div class="vaga-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-            <div onClick="{{ escolherBarbeiro }}" style="cursor:pointer;background:#fffefb;border-radius:14px;padding:clamp(22px,6vw,32px);box-shadow:0 0 0 1px rgba(21,41,65,0.12)" style-hover="box-shadow:0 0 0 1px rgba(180,162,131,0.7)">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-                <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8a7550">Vaga aberta</span>
-                <span style="font-size:11px;padding:4px 10px;border-radius:999px;background:#efe8dc;color:#152941">MEI</span>
+          <h1 style="font-size:clamp(28px,7vw,48px);font-weight:500;letter-spacing:-0.03em;line-height:1.08;margin:0 0 18px;max-width:22ch">Faça parte do nosso time</h1>
+          <p style="font-size:clamp(15px,4vw,17px);line-height:1.65;color:#444f62;max-width:66ch;margin:0 0 44px">Um time que serve bem por escolha. O processo seletivo tem etapas e esta é a primeira: um questionário para conhecermos seu perfil. Em caso de aprovação preliminar, entramos em contato para um encontro pessoal.</p>
+          <div class="vaga-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+            <button type="button" class="rec-card" onClick="{{ abrirBarbeiro }}" aria-haspopup="dialog" style="animation-delay:0s">
+              <div class="rec-img"><img src="img/destaques/corte.jpeg" alt="Barbeiro finalizando um corte" loading="lazy"></div>
+              <div style="padding:clamp(22px,5vw,30px)">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+                  <span class="rec-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg></span>
+                  <span style="font-size:11px;padding:4px 10px;border-radius:999px;background:#efe8dc;color:#152941">MEI</span>
+                </div>
+                <span style="display:block;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8a7550;margin-bottom:6px">Vaga aberta</span>
+                <span style="display:block;font-size:24px;font-weight:500;letter-spacing:-0.02em">Barbeiro(a)</span>
+                <span style="display:block;font-size:14px;color:#6b7382;line-height:1.55;margin:10px 0 22px">Para quem tem paixão pelo ofício, facilidade de relacionamento e acredita que um corte muda a vida de alguém.</span>
+                <span class="rec-cta">Candidatar-se <span class="rec-seta">→</span></span>
               </div>
-              <div style="font-size:24px;font-weight:500;letter-spacing:-0.02em">Barbeiro(a)</div>
-              <p style="font-size:14px;color:#6b7382;line-height:1.55;margin:10px 0 22px">Para quem tem paixão pelo ofício, facilidade de relacionamento e acredita que um corte muda a vida de alguém.</p>
-              <span style="display:inline-flex;align-items:center;gap:8px;font-size:14px;color:#8a7550">Iniciar candidatura →</span>
-            </div>
-            <div onClick="{{ escolherRecepcao }}" style="cursor:pointer;background:#fffefb;border-radius:14px;padding:clamp(22px,6vw,32px);box-shadow:0 0 0 1px rgba(21,41,65,0.12)" style-hover="box-shadow:0 0 0 1px rgba(180,162,131,0.7)">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-                <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8a7550">Vaga aberta</span>
-                <span style="font-size:11px;padding:4px 10px;border-radius:999px;background:#efe8dc;color:#152941">CLT</span>
+            </button>
+            <button type="button" class="rec-card" onClick="{{ abrirRecepcao }}" aria-haspopup="dialog" style="animation-delay:.08s">
+              <div class="rec-img"><img src="img/hero-operacao.jpeg" alt="Ambiente de atendimento da Barbearia Seu Liah" loading="lazy"></div>
+              <div style="padding:clamp(22px,5vw,30px)">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+                  <span class="rec-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17a8 8 0 0 1 16 0"></path><line x1="2" y1="17" x2="22" y2="17"></line><line x1="12" y1="6" x2="12" y2="9"></line><line x1="10" y1="6" x2="14" y2="6"></line></svg></span>
+                  <span style="font-size:11px;padding:4px 10px;border-radius:999px;background:#efe8dc;color:#152941">CLT</span>
+                </div>
+                <span style="display:block;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8a7550;margin-bottom:6px">Vaga aberta</span>
+                <span style="display:block;font-size:24px;font-weight:500;letter-spacing:-0.02em">Recepcionista</span>
+                <span style="display:block;font-size:14px;color:#6b7382;line-height:1.55;margin:10px 0 22px">Primeira pessoa que o cliente encontra: comunicação clara, organização e adaptabilidade são indispensáveis.</span>
+                <span class="rec-cta">Candidatar-se <span class="rec-seta">→</span></span>
               </div>
-              <div style="font-size:24px;font-weight:500;letter-spacing:-0.02em">Recepcionista</div>
-              <p style="font-size:14px;color:#6b7382;line-height:1.55;margin:10px 0 22px">Primeira pessoa que o cliente encontra: comunicação clara, organização e adaptabilidade são indispensáveis.</p>
-              <span style="display:inline-flex;align-items:center;gap:8px;font-size:14px;color:#8a7550">Iniciar candidatura →</span>
-            </div>
+            </button>
           </div>
           <div class="banco-row" style="margin-top:18px;background:#fffefb;border-radius:14px;padding:24px clamp(20px,6vw,32px);box-shadow:0 0 0 1px rgba(21,41,65,0.12);display:flex;align-items:center;justify-content:space-between;gap:32px">
             <div>
@@ -402,6 +439,8 @@
             </sc-for>
           </div>
 
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" onChange="{{ marcarBot }}" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+
           <sc-if value="{{ temErroEnvio }}" hint-placeholder-val="{{ false }}">
             <div style="margin-top:16px;font-size:13px;color:#8a3a3a;background:#fbeeee;border-radius:8px;padding:12px 14px">{{ erroEnvio }}</div>
           </sc-if>
@@ -422,6 +461,37 @@
         </div>
       </sc-if>
     </section>
+
+    <sc-if value="{{ modalAberto }}" hint-placeholder-val="{{ false }}">
+      <div class="rec-overlay" onClick="{{ fecharModal }}">
+        <div class="rec-modal" role="dialog" aria-modal="true" aria-label="{{ modalTitulo }}" onClick="{{ pararClique }}">
+          <div class="rec-modal-top">
+            <div style="min-width:0">
+              <div style="font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:#8a7550;margin-bottom:3px">Processo seletivo</div>
+              <div style="font-size:17px;font-weight:500;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ modalTitulo }}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <a class="rec-ext" href="{{ modalLink }}" target="_blank" rel="noopener noreferrer">Abrir<span class="rec-ext-long">&nbsp;no Google Forms</span> ↗</a>
+              <button type="button" class="rec-close" onClick="{{ fecharModal }}" aria-label="Fechar formulário">✕</button>
+            </div>
+          </div>
+          <sc-if value="{{ modalEmbed }}" hint-placeholder-val="{{ true }}">
+            <div class="rec-frame">
+              <div class="rec-loading"><span class="rec-spin"></span>Carregando formulário…</div>
+              <iframe src="{{ modalSrc }}" title="{{ modalTitulo }} · Google Forms"></iframe>
+            </div>
+          </sc-if>
+          <sc-if value="{{ modalLogin }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 24px;gap:14px">
+              <span class="rec-icon" aria-hidden="true">G</span>
+              <div style="font-size:20px;font-weight:500;letter-spacing:-0.01em">Este formulário pede login no Google</div>
+              <p style="font-size:14px;line-height:1.6;color:#6b7382;max-width:44ch;margin:0">Por segurança, o Google não permite fazer login dentro do site. Abra o formulário em uma nova aba, entre com sua conta Google e responda normalmente.</p>
+              <a class="rec-ext" href="{{ modalLink }}" target="_blank" rel="noopener noreferrer" style="padding:13px 22px;font-size:14px;background:#152941;color:#fffefb;border-color:#152941">Abrir formulário no Google Forms ↗</a>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
   </sc-if>
 
   </main>
@@ -439,92 +509,47 @@ const WEB3FORMS_ACCESS_KEY = '1e7ab7ab-e6b6-419e-858d-25778345239b';
 class Component extends DCLogic {
   state = {
     page: 'home', vaga: null, step: 0, resp: {}, arquivos: {}, enviado: false,
-    enviando: false, erroEnvio: '', menuAberto: false
+    enviando: false, erroEnvio: '', menuAberto: false, modal: null
   };
 
-  go = (p) => () => this.setState({ page: p, enviado: false, menuAberto: false });
+  go = (p) => () => { if (this.state.modal) this.fecharModal(); this.setState({ page: p, enviado: false, menuAberto: false }); };
   toggleMenu = () => this.setState(s => ({ menuAberto: !s.menuAberto }));
 
   formularios() {
-    const barbeiro = [
-      { desc: 'Primeiro, o básico para entrarmos em contato.', campos: [
-        { id: 'nome', label: 'Qual seu nome?', tipo: 'texto', placeholder: 'Nome completo' },
-        { id: 'idade', label: 'Qual sua idade?', tipo: 'texto', placeholder: 'Ex: 24' },
-        { id: 'tel', label: 'Telefone para contato', tipo: 'texto', placeholder: '(87) 90000-0000' },
-        { id: 'insta', label: 'Qual seu Instagram? Se tiver um profissional e um pessoal, informe o de trabalho.', tipo: 'texto', placeholder: '@seuperfil' },
-        { id: 'habitos', label: 'Costuma beber ou fumar com frequência?', tipo: 'escolha', opcoes: ['Não', 'Socialmente', 'Sim'] }
-      ]},
-      { desc: 'Agora sua trajetória na profissão.', campos: [
-        { id: 'trajetoria', label: 'Qual é a sua trajetória na profissão? Fale das suas experiências, de quando começou e dos cursos que fez para se aperfeiçoar.', tipo: 'area' },
-        { id: 'identificacao', label: 'O que te fez se identificar com a Barbearia Seu Liah? E o que te faz querer fazer parte do nosso time?', tipo: 'area' },
-        { id: 'ouviu', label: 'O que já ouviu falar da Barbearia Seu Liah antes de chegar até aqui?', tipo: 'area', ajuda: 'Se não tiver ouvido nada, pode deixar em branco.' }
-      ]},
-      { desc: 'Sobre atendimento e convivência.', campos: [
-        { id: 'atendimento', label: 'Como descreveria seu atendimento e relacionamento com o cliente? O que você busca entregar?', tipo: 'area' },
-        { id: 'equipe', label: 'Você tem facilidade para trabalhar em equipe?', tipo: 'escolha', opcoes: ['Sim', 'Em parte', 'Ainda desenvolvo isso'] },
-        { id: 'descricao', label: 'Se eu pedisse a alguém próximo que te descrevesse — no trabalho e como pessoa — como você acha que seria descrito(a)?', tipo: 'area' }
-      ]},
-      { desc: 'Para fechar.', campos: [
-        { id: 'porque', label: 'Diante de todos os candidatos, por que devemos te selecionar para a próxima etapa?', tipo: 'area', ajuda: 'Pense no que esperamos de quem vai nos representar junto aos clientes.' },
-        { id: 'cv', label: 'Envie seu currículo', tipo: 'arquivo' },
-        { id: 'lgpd', label: 'Privacidade', tipo: 'aceite', ajuda: 'Autorizo a Barbearia Seu Liah a tratar meus dados para fins deste processo seletivo, conforme a LGPD.' }
-      ]}
-    ];
-    const recepcao = [
-      { desc: 'Essa seção envolve dados pessoais. Queremos te conhecer melhor.', campos: [
-        { id: 'nome', label: 'Qual seu nome?', tipo: 'texto', placeholder: 'Nome completo' },
-        { id: 'apelido', label: 'Como gosta de ser chamado(a)?', tipo: 'texto' },
-        { id: 'idade', label: 'Qual sua idade?', tipo: 'texto' },
-        { id: 'email', label: 'E-mail', tipo: 'texto', placeholder: 'seu@email.com' },
-        { id: 'tel', label: 'Telefone para contato', tipo: 'texto', placeholder: '(87) 90000-0000' },
-        { id: 'endereco', label: 'Onde você mora? (endereço completo com CEP)', tipo: 'area' },
-        { id: 'redes', label: 'Suas redes sociais', tipo: 'texto', placeholder: '@seuperfil' }
-      ]},
-      { desc: 'Habilidades e disponibilidade.', campos: [
-        { id: 'excel', label: 'Possui experiência com Excel?', tipo: 'escolha', opcoes: ['Sim', 'Não'] },
-        { id: 'midias', label: 'Tem experiência com mídias sociais?', tipo: 'escolha', opcoes: ['Sim', 'Não'] },
-        { id: 'habitos', label: 'Este trabalho exige concentração, foco e postura profissional. Você acredita que seus hábitos pessoais podem interferir no seu desempenho ou no ambiente?', tipo: 'area' },
-        { id: 'horarios', label: 'Você tem flexibilidade de horários? Está disponível para fins de semana ou feriados, se necessário?', tipo: 'escolha', opcoes: ['Sim', 'Com aviso prévio', 'Não'] }
-      ]},
-      { desc: 'Agora conte mais um pouco sobre você.', campos: [
-        { id: 'identificacao', label: 'O que te fez se identificar com essa vaga?', tipo: 'area' },
-        { id: 'ouviu', label: 'O que você sabe ou já ouviu falar da Seu Liah antes de chegar até aqui?', tipo: 'area' },
-        { id: 'ideal', label: 'Na sua opinião, quais características não podem faltar para que um(a) recepcionista seja considerado(a) ideal?', tipo: 'area' },
-        { id: 'aprendizados', label: 'Independente do currículo, resuma os principais aprendizados das suas experiências (formais ou informais) e da vida.', tipo: 'area' },
-        { id: 'descricao', label: 'Se alguém próximo te descrevesse, no trabalho e como pessoa, como você acha que seria descrito(a)?', tipo: 'area' },
-        { id: 'incomodos', label: 'Como costuma lidar com as coisas que lhe incomodam?', tipo: 'area' }
-      ]},
-      { desc: 'Conte o que você faria — situações reais do dia a dia.', campos: [
-        { id: 'impressionar', label: 'Conte um exemplo em que conseguiu impressionar o cliente. O que fez para superar as expectativas?', tipo: 'area' },
-        { id: 'colega', label: 'Fale de um momento em que trabalhou com alguém que não estava cumprindo a parte dele. Como lidou com a situação?', tipo: 'area' },
-        { id: 'experiencia', label: 'Como um recepcionista pode impactar a experiência do cliente desde o primeiro contato? Dê um exemplo seu.', tipo: 'area' },
-        { id: 'irritado', label: 'O que você faria se um cliente chegasse irritado com a insatisfação de um serviço prestado?', tipo: 'area' },
-        { id: 'conviver', label: 'Como lida com situações em que precisa conviver com alguém de quem não gosta?', tipo: 'area' },
-        { id: 'meta', label: 'Qual a última meta que você estabeleceu ou que foi estipulada para você, e o que fez para alcançá-la?', tipo: 'area' },
-        { id: 'erro', label: 'Cite um erro que já cometeu na sua função e o que aprendeu com ele.', tipo: 'area' },
-        { id: 'vendas', label: 'Qual sua experiência com vendas ou em situações em que precisou sugerir produtos e serviços?', tipo: 'area' },
-        { id: 'comunicacao', label: 'A comunicação clara é essencial nessa função. Como você avalia a sua comunicação?', tipo: 'area' }
-      ]},
-      { desc: 'Para finalizar.', campos: [
-        { id: 'cv', label: 'Nos envie seu currículo', tipo: 'arquivo' },
-        { id: 'porque', label: 'Diante dos demais candidatos, por que deveríamos contratar você?', tipo: 'area' },
-        { id: 'lgpd', label: 'Privacidade', tipo: 'aceite', ajuda: 'Autorizo a Barbearia Seu Liah a tratar meus dados para fins deste processo seletivo, conforme a LGPD.' }
-      ]}
-    ];
     const talentos = [
       { desc: 'Cadastro rápido para avisarmos quando abrir uma vaga do seu perfil.', campos: [
         { id: 'nome', label: 'Qual seu nome?', tipo: 'texto' },
         { id: 'tel', label: 'Telefone para contato', tipo: 'texto', placeholder: '(87) 90000-0000' },
         { id: 'area', label: 'Área de interesse', tipo: 'escolha', opcoes: ['Barbeiro', 'Recepção', 'Estética', 'Outra'] },
         { id: 'sobre', label: 'Conte em poucas linhas sua experiência e o que você busca.', tipo: 'area' },
-        { id: 'cv', label: 'Currículo (opcional)', tipo: 'arquivo' },
-        { id: 'lgpd', label: 'Privacidade', tipo: 'aceite', ajuda: 'Autorizo o armazenamento dos meus dados no banco de talentos da Barbearia Seu Liah, conforme a LGPD.' }
+        { id: 'cv', label: 'Link do seu currículo (opcional)', tipo: 'texto', opcional: true, placeholder: 'https://', ajuda: 'Cole o link do PDF no Google Drive, LinkedIn ou similar (com acesso liberado). Se preferir, envie o PDF pelo WhatsApp (87) 98135-7771 após a candidatura.' },
+        { id: 'lgpd', label: 'Privacidade', tipo: 'aceite', ajuda: 'Autorizo a Barbearia Seu Liah a guardar meus dados no banco de talentos para me avisar sobre vagas, conforme a LGPD. Posso pedir a exclusão a qualquer momento pelo WhatsApp (87) 98135-7771.' }
       ]}
     ];
-    return { barbeiro, recepcao, talentos };
+    return { talentos };
   }
 
-  titulos = { barbeiro: 'Processo seletivo · Barbeiro(a)', recepcao: 'Processo seletivo · Recepção', talentos: 'Banco de talentos' };
+  titulos = { talentos: 'Banco de talentos' };
+
+  // Google Forms oficiais. exigeLogin: o formulário pede conta Google e não abre dentro de iframe;
+  // se a opção for desativada no Google Forms, troque para false e ele passa a abrir no modal.
+  vagasGoogle = {
+    barbeiro: { titulo: 'Barbeiro(a)', link: 'https://forms.gle/MtjRAYABznMGEWkf9',
+      embed: 'https://docs.google.com/forms/d/e/1FAIpQLSfqWaG3VLrCczfqNnM47-o4DxHELn8VXnoVgdAGjNwfu84hrA/viewform?embedded=true', exigeLogin: false },
+    recepcao: { titulo: 'Recepcionista', link: 'https://forms.gle/6eQumkUQGXR6Fr2G6',
+      embed: 'https://docs.google.com/forms/d/e/1FAIpQLSdrii_IZapITIVRiatfSrWR2H_36e0HQ7deV1LhyoDdew2ADA/viewform?embedded=true', exigeLogin: true }
+  };
+
+  onEsc = (e) => { if (e.key === 'Escape') this.fecharModal(); };
+  abrirModal = (id) => () => {
+    this.setState({ modal: id });
+    try { document.body.style.overflow = 'hidden'; window.addEventListener('keydown', this.onEsc); } catch (e) {}
+  };
+  fecharModal = () => {
+    this.setState({ modal: null });
+    try { document.body.style.overflow = ''; window.removeEventListener('keydown', this.onEsc); } catch (e) {}
+  };
+  pararClique = (e) => { if (e && e.stopPropagation) e.stopPropagation(); };
 
   setResp = (id) => (e) => {
     if (e && e.target && e.target.files) {
@@ -539,12 +564,32 @@ class Component extends DCLogic {
     this.setState(s => ({ resp: Object.assign({}, s.resp, { [id]: v }) }));
   };
 
+  validarPasso = (passo) => {
+    const r = this.state.resp;
+    const faltando = [];
+    passo.campos.forEach(c => {
+      if (c.opcional || c.tipo === 'arquivo') return;
+      const v = r[c.id];
+      if (c.tipo === 'aceite' ? v !== true : !(v != null && String(v).trim())) faltando.push(c);
+    });
+    if (faltando.some(c => c.tipo === 'aceite')) return 'Para enviar, é preciso marcar a autorização de uso dos dados (LGPD).';
+    if (faltando.length) return 'Preencha todos os campos desta etapa para continuar' + (faltando.length === 1 ? ': ' + faltando[0].label : ' (' + faltando.length + ' em branco).');
+    const tel = passo.campos.find(c => c.id === 'tel');
+    if (tel && String(r.tel || '').replace(/\D/g, '').length < 10) return 'Informe um telefone válido com DDD.';
+    const email = passo.campos.find(c => c.id === 'email');
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(r.email || '').trim())) return 'Informe um e-mail válido.';
+    return '';
+  };
+
+  marcarBot = () => this.setState({ bot: true });
+
   toggleAceite = (id) => () => this.setState(s => ({ resp: Object.assign({}, s.resp, { [id]: !s.resp[id] }) }));
   escolher = (id, v) => () => this.setState(s => ({ resp: Object.assign({}, s.resp, { [id]: v }) }));
 
   enviarCandidatura = () => {
     const s = this.state;
     const passos = this.formularios()[s.vaga] || [];
+    if (s.bot) { this.setState({ enviado: true, vaga: null, step: 0, resp: {}, arquivos: {} }); return; }
     const fd = new FormData();
     fd.append('access_key', WEB3FORMS_ACCESS_KEY);
     fd.append('subject', 'Nova candidatura — ' + (this.titulos[s.vaga] || s.vaga));
@@ -636,10 +681,19 @@ class Component extends DCLogic {
       semVaga: s.page === 'trabalhe' && !s.vaga && !s.enviado,
       mostrarForm: !!s.vaga && !s.enviado,
       enviado: s.enviado,
-      escolherBarbeiro: () => this.setState({ vaga: 'barbeiro', step: 0 }),
-      escolherRecepcao: () => this.setState({ vaga: 'recepcao', step: 0 }),
+      abrirBarbeiro: this.abrirModal('barbeiro'),
+      abrirRecepcao: this.abrirModal('recepcao'),
+      modalAberto: !!s.modal,
+      modalTitulo: s.modal ? this.vagasGoogle[s.modal].titulo : '',
+      modalLink: s.modal ? this.vagasGoogle[s.modal].link : '',
+      modalSrc: s.modal ? this.vagasGoogle[s.modal].embed : '',
+      modalEmbed: !!s.modal && !this.vagasGoogle[s.modal].exigeLogin,
+      modalLogin: !!s.modal && this.vagasGoogle[s.modal].exigeLogin,
+      fecharModal: this.fecharModal,
+      pararClique: this.pararClique,
       escolherTalentos: () => this.setState({ vaga: 'talentos', step: 0 }),
-      voltarVagas: () => this.setState({ vaga: null, step: 0, enviado: false, resp: {} }),
+      voltarVagas: () => this.setState({ vaga: null, step: 0, enviado: false, resp: {}, arquivos: {}, erroEnvio: '' }),
+      marcarBot: this.marcarBot,
       vagaTitulo: s.vaga ? this.titulos[s.vaga] : '',
       passoDesc: passo ? passo.desc : '',
       passoAtual: s.step + 1,
@@ -648,11 +702,13 @@ class Component extends DCLogic {
       campos,
       labelVoltar: s.step === 0 ? 'Cancelar' : 'Voltar',
       labelAvancar: passos && s.step === passos.length - 1 ? (s.enviando ? 'Enviando…' : 'Enviar candidatura') : 'Continuar',
-      passoAnterior: () => s.step === 0 ? this.setState({ vaga: null, resp: {} }) : this.setState({ step: s.step - 1 }),
+      passoAnterior: () => s.step === 0 ? this.setState({ vaga: null, resp: {}, arquivos: {}, erroEnvio: '' }) : this.setState({ step: s.step - 1, erroEnvio: '' }),
       passoProximo: () => {
-        if (s.enviando) return;
-        if (passos && s.step === passos.length - 1) this.enviarCandidatura();
-        else this.setState({ step: s.step + 1 });
+        if (s.enviando || !passo) return;
+        const erro = this.validarPasso(passo);
+        if (erro) { this.setState({ erroEnvio: erro }); return; }
+        if (s.step === passos.length - 1) this.enviarCandidatura();
+        else this.setState({ step: s.step + 1, erroEnvio: '' });
       },
       erroEnvio: s.erroEnvio,
       temErroEnvio: !!s.erroEnvio,
