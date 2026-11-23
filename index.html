@@ -10,6 +10,7 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-10952360551');
+  gtag('config', 'G-4Q2RX4NZLN');
   // Conversao "Contato": clique em Agendar (CashBarber) ou WhatsApp
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
@@ -18,6 +19,11 @@
     if (href.indexOf('cashbarber.com.br') !== -1 || href.indexOf('wa.me/') !== -1) {
       gtag('event', 'conversion', {
         'send_to': 'AW-10952360551/xEeNCOH8ncMZEOeEv-Yo',
+        'transport_type': 'beacon'
+      });
+      gtag('event', 'clique_agendamento', {
+        'send_to': 'G-4Q2RX4NZLN',
+        'canal': href.indexOf('wa.me/') !== -1 ? 'whatsapp' : 'cashbarber',
         'transport_type': 'beacon'
       });
     }
