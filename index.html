@@ -24,6 +24,21 @@
   }, true);
 </script>
 <script src="./support.js"></script>
+<script>
+  // Video da home: o renderizador descarta muted/loop/controls; religa aqui para o autoplay funcionar.
+  (function () {
+    function ajustar() {
+      var v = document.querySelector('video[src*="seu-liah-institucional"]');
+      if (!v || v.__ajustado) return;
+      v.__ajustado = true;
+      v.muted = true; v.defaultMuted = true; v.setAttribute('muted', '');
+      v.loop = true; v.controls = true; v.playsInline = true;
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+    }
+    new MutationObserver(ajustar).observe(document.documentElement, { childList: true, subtree: true });
+    document.addEventListener('DOMContentLoaded', ajustar);
+  })();
+</script>
 </head>
 <body>
 <x-dc>
